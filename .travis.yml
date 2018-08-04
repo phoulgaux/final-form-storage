@@ -9,3 +9,6 @@ jobs:
       script: npm run typecheck
     - stage: test
       script: npm test
+stages:
+  - check
+  - test
