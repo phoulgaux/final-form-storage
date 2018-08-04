@@ -1,13 +1,6 @@
-import { FormState, FormSubscriber } from "final-form";
+import { FormSubscriber } from "final-form";
 
-interface IStorage {
-  setItem(key: string, value: string): void;
-}
-
-interface IStorageOptions {
-  key: string;
-  storage: IStorage;
-}
+import { IStorageOptions } from "./interfaces/IStorageOptions";
 
 type FormSubscriberBuilder = (options: IStorageOptions) => FormSubscriber;
 
