@@ -7,7 +7,7 @@
         "build": "tsc",
         "clean": "rimraf dist",
         "lint": "tslint --project .",
-        "test": "jest --watch",
+        "test": "jest",
         "typecheck": "tsc --noEmit"
     },
     "author": "Piotr Balbier <oss@balbier.net>",

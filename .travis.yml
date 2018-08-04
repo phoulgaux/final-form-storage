@@ -1,3 +1,11 @@
 language: node_js
 node_js:
   - node
+jobs:
+  incude:
+    - stage: check
+      script: npm run lint
+    - 
+      script: npm run typecheck
+    - stage: test
+      script: npm test
