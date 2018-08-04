@@ -4,25 +4,17 @@ import * as TypeMoq from "typemoq";
 
 import { loadValues } from "./loadValues";
 
-test("load calls storage.getItem with proper data", () => {
+test("calls storage.getItem with proper data", () => {
   v.assert(
-    v.forall(
-      v.record({
-        key: v.asciinestring
-      }),
-      ({ key }) => {
-        const storageMock = TypeMoq.Mock.ofType<Storage>();
-        storageMock.setup(storage => storage.getItem(TypeMoq.It.isAny()));
+    v.forall(v.asciinestring, key => {
+      const storageMock = TypeMoq.Mock.ofType<Storage>();
+      storageMock.setup(storage => storage.getItem(TypeMoq.It.isAny()));
 
-        loadValues({ key, storage: storageMock.object })();
+      loadValues({ key, storage: storageMock.object })();
 
-        storageMock.verify(
-          storage => storage.getItem(key),
-          TypeMoq.Times.once()
-        );
+      storageMock.verify(storage => storage.getItem(key), TypeMoq.Times.once());
 
-        return true;
-      }
-    )
+      return true;
+    })
   );
 });
