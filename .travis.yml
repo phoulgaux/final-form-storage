@@ -1,14 +1,4 @@
 language: node_js
 node_js:
   - node
-jobs:
-  incude:
-    - stage: check
-      script: npm run lint
-    - 
-      script: npm run typecheck
-    - stage: test
-      script: npm test
-stages:
-  - check
-  - test
+script: npm run typecheck && npm run lint && npm test
