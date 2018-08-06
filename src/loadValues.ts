@@ -1,5 +1,16 @@
+import { MutableState, Mutator } from "final-form";
+
 import { IStorageOptions } from "./interfaces/IStorageOptions";
 
-export const loadValues = (options: IStorageOptions) => () => {
-  options.storage.getItem(options.key);
+type MutatorBuilder = (options: IStorageOptions) => Mutator;
+
+export const loadValues: MutatorBuilder = options => (
+  _,
+  state: MutableState
+) => {
+  const storageItem = options.storage.getItem(options.key);
+
+  const newValues = storageItem ? JSON.parse(storageItem) : {};
+
+  state.formState.values = newValues;
 };
