@@ -3,6 +3,7 @@ import * as v from "jsverify";
 import * as TypeMoq from "typemoq";
 
 import { arbitraryFormState } from "./arbitraries/formState";
+import { DataStorage } from "./interfaces/DataStorage";
 import { saveValues } from "./saveValues";
 
 test("saveValues calls storage.setItem with proper data", () => {
@@ -13,15 +14,15 @@ test("saveValues calls storage.setItem with proper data", () => {
         key: v.asciinestring
       }),
       ({ formState, key }) => {
-        const storageMock = TypeMoq.Mock.ofType<Storage>();
+        const storageMock = TypeMoq.Mock.ofType<DataStorage>();
         storageMock.setup(storage =>
-          storage.setItem(TypeMoq.It.isAny(), TypeMoq.It.isAny())
+          storage.saveData(TypeMoq.It.isAny(), TypeMoq.It.isAny())
         );
 
         saveValues({ key, storage: storageMock.object })(formState);
 
         storageMock.verify(
-          storage => storage.setItem(key, JSON.stringify(formState.values)),
+          storage => storage.saveData(key, JSON.stringify(formState.values)),
           TypeMoq.Times.once()
         );
 
