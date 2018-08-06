@@ -1,4 +1,4 @@
 export interface DataStorage {
-  loadData(key: string): string;
-  saveData(key: string, value: string): void;
+  loadData(key: string): any;
+  saveData(key: string, value: any): void;
 }

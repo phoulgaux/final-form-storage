@@ -22,7 +22,7 @@ test("saveValues calls storage.setItem with proper data", () => {
         saveValues({ key, storage: storageMock.object })(formState);
 
         storageMock.verify(
-          storage => storage.saveData(key, JSON.stringify(formState.values)),
+          storage => storage.saveData(key, formState.values),
           TypeMoq.Times.once()
         );
 
