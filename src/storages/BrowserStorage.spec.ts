@@ -4,41 +4,70 @@ import * as TypeMoq from "typemoq";
 
 import { BrowserStorage } from "./BrowserStorage";
 
-test("calls storage's getItem when loadData is called", () => {
-  v.assertForall(v.asciinestring, v.dict(v.string), (key, newValues) => {
-    const storageMock = TypeMoq.Mock.ofType<Storage>();
-    storageMock
-      .setup(storage => storage.getItem(TypeMoq.It.isValue(key)))
-      .returns(() => JSON.stringify(newValues));
+describe("loadData", () => {
+  test("calls storage's getItem", () => {
+    v.assertForall(v.asciinestring, v.dict(v.string), (key, newValues) => {
+      const storageMock = TypeMoq.Mock.ofType<Storage>();
+      storageMock
+        .setup(storage => storage.getItem(TypeMoq.It.isValue(key)))
+        .returns(() => JSON.stringify(newValues));
 
-    const storage = BrowserStorage.useWith(storageMock.object);
-    storage.loadData(key);
+      const storage = BrowserStorage.useWith(storageMock.object);
+      storage.loadData(key);
 
-    storageMock.verify(
-      storage => storage.getItem(TypeMoq.It.isValue(key)),
-      TypeMoq.Times.once()
-    );
-    storageMock.verify(
-      storage => storage.getItem(TypeMoq.It.isAnyString()),
-      TypeMoq.Times.once()
-    );
+      storageMock.verify(
+        storage => storage.getItem(TypeMoq.It.isValue(key)),
+        TypeMoq.Times.once()
+      );
+      storageMock.verify(
+        storage => storage.getItem(TypeMoq.It.isAnyString()),
+        TypeMoq.Times.once()
+      );
 
-    return true;
+      return true;
+    });
   });
-});
 
-test("rebuilds returned data", () => {
-  v.assertForall(v.asciinestring, v.dict(v.string), (key, newValues) => {
-    const storageMock = TypeMoq.Mock.ofType<Storage>();
-    storageMock
-      .setup(storage => storage.getItem(TypeMoq.It.isValue(key)))
-      .returns(() => JSON.stringify(newValues));
+  test("rebuilds returned data", () => {
+    v.assertForall(v.asciinestring, v.dict(v.string), (key, newValues) => {
+      const storageMock = TypeMoq.Mock.ofType<Storage>();
+      storageMock
+        .setup(storage => storage.getItem(TypeMoq.It.isValue(key)))
+        .returns(() => JSON.stringify(newValues));
 
-    const storage = BrowserStorage.useWith(storageMock.object);
-    const retrievedValues = storage.loadData(key);
+      const storage = BrowserStorage.useWith(storageMock.object);
+      const retrievedValues = storage.loadData(key);
 
-    expect(retrievedValues).toEqual(newValues);
+      expect(retrievedValues).toEqual(newValues);
 
-    return true;
+      return true;
+    });
+  });
+
+  test("returns null when retrieved data is null", () => {
+    v.assertForall(v.asciinestring, key => {
+      const storageMock = TypeMoq.Mock.ofType<Storage>();
+      storageMock
+        .setup(storage => storage.getItem(TypeMoq.It.isValue(key)))
+        .returns(() => null);
+
+      const storage = BrowserStorage.useWith(storageMock.object);
+      const retrievedValues = storage.loadData(key);
+
+      expect(retrievedValues).toBeNull();
+
+      return true;
+    });
+  });
+
+  test("returns null when storage is null", () => {
+    v.assertForall(v.asciinestring, key => {
+      const storage = BrowserStorage.useWith(null);
+      const retrievedValues = storage.loadData(key);
+
+      expect(retrievedValues).toBeNull();
+
+      return true;
+    });
   });
 });
