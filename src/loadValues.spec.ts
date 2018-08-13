@@ -11,11 +11,9 @@ const toolsMock = TypeMoq.Mock.ofType<Tools>();
 
 test("calls storage.getItem with proper data", () => {
   v.assertForall(
-    v.record({
-      key: v.asciinestring,
-      mutableFormState: arbitraryMutableState
-    }),
-    ({ key, mutableFormState }) => {
+    v.asciinestring,
+    arbitraryMutableState,
+    (key, mutableFormState) => {
       const storageMock = TypeMoq.Mock.ofType<DataStorage>();
       storageMock.setup(storage => storage.loadData(TypeMoq.It.isValue(key)));
 
@@ -41,12 +39,10 @@ test("calls storage.getItem with proper data", () => {
 
 test("loadValues mutates the form's state by replacing values", () => {
   v.assertForall(
-    v.record({
-      key: v.asciinestring,
-      mutableFormState: arbitraryMutableState,
-      newValues: v.dict(v.string)
-    }),
-    ({ key, mutableFormState, newValues }) => {
+    v.asciinestring,
+    arbitraryMutableState,
+    v.dict(v.string),
+    (key, mutableFormState, newValues) => {
       const storageMock = TypeMoq.Mock.ofType<DataStorage>();
       storageMock
         .setup(storage => storage.loadData(TypeMoq.It.isValue(key)))
