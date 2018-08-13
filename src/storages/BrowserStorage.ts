@@ -12,11 +12,17 @@ export class BrowserStorage implements DataStorage {
   }
 
   public loadData(key: string) {
-    if (!this.storage) {
+    if (this.storage === null) {
       return null;
     }
 
-    return this.storage.getItem(key);
+    const retrievedItem = this.storage.getItem(key);
+
+    if (retrievedItem === null) {
+      return null;
+    }
+
+    return JSON.parse(retrievedItem);
   }
 
   public saveData() {
