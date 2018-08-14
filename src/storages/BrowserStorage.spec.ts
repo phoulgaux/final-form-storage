@@ -84,11 +84,34 @@ describe("saveData", () => {
       storage.saveData(key, newValues);
 
       storageMock.verify(
-        s => s.setItem(TypeMoq.It.isValue(key), TypeMoq.It.isAnyString()),
+        s => s.setItem(TypeMoq.It.isAnyString(), TypeMoq.It.isAnyString()),
         TypeMoq.Times.once()
       );
       storageMock.verify(
-        s => s.setItem(TypeMoq.It.isAnyString(), TypeMoq.It.isAny()),
+        s => s.setItem(TypeMoq.It.isAnyString(), TypeMoq.It.isAnyString()),
+        TypeMoq.Times.once()
+      );
+
+      return true;
+    });
+  });
+
+  test("calls setItem with correct value argument", () => {
+    v.assertForall(v.asciinestring, v.dict(v.string), (key, newValues) => {
+      const storageMock = TypeMoq.Mock.ofType<Storage>();
+      storageMock.setup(s =>
+        s.setItem(TypeMoq.It.isAnyString(), TypeMoq.It.isAny())
+      );
+
+      const storage = BrowserStorage.useWith(storageMock.object);
+      storage.saveData(key, newValues);
+
+      storageMock.verify(
+        s =>
+          s.setItem(
+            TypeMoq.It.isValue(key),
+            TypeMoq.It.isValue(JSON.stringify(newValues))
+          ),
         TypeMoq.Times.once()
       );
 
