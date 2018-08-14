@@ -71,3 +71,28 @@ describe("loadData", () => {
     });
   });
 });
+
+describe("saveData", () => {
+  test("calls storage's setItem", () => {
+    v.assertForall(v.asciinestring, v.dict(v.string), (key, newValues) => {
+      const storageMock = TypeMoq.Mock.ofType<Storage>();
+      storageMock.setup(s =>
+        s.setItem(TypeMoq.It.isAnyString(), TypeMoq.It.isAny())
+      );
+
+      const storage = BrowserStorage.useWith(storageMock.object);
+      storage.saveData(key, newValues);
+
+      storageMock.verify(
+        s => s.setItem(TypeMoq.It.isValue(key), TypeMoq.It.isAnyString()),
+        TypeMoq.Times.once()
+      );
+      storageMock.verify(
+        s => s.setItem(TypeMoq.It.isAnyString(), TypeMoq.It.isAny()),
+        TypeMoq.Times.once()
+      );
+
+      return true;
+    });
+  });
+});

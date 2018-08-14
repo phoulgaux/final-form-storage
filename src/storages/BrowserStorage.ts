@@ -25,7 +25,11 @@ export class BrowserStorage implements DataStorage {
     return JSON.parse(retrievedItem);
   }
 
-  public saveData() {
-    return;
+  public saveData(key: string, value: any) {
+    if (this.storage === null) {
+      return;
+    }
+
+    this.storage.setItem(key, JSON.stringify(value));
   }
 }
