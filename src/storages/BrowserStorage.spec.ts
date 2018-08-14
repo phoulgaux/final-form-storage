@@ -9,18 +9,18 @@ describe("loadData", () => {
     v.assertForall(v.asciinestring, v.dict(v.string), (key, newValues) => {
       const storageMock = TypeMoq.Mock.ofType<Storage>();
       storageMock
-        .setup(storage => storage.getItem(TypeMoq.It.isValue(key)))
+        .setup(s => s.getItem(TypeMoq.It.isValue(key)))
         .returns(() => JSON.stringify(newValues));
 
       const storage = BrowserStorage.useWith(storageMock.object);
       storage.loadData(key);
 
       storageMock.verify(
-        storage => storage.getItem(TypeMoq.It.isValue(key)),
+        s => s.getItem(TypeMoq.It.isValue(key)),
         TypeMoq.Times.once()
       );
       storageMock.verify(
-        storage => storage.getItem(TypeMoq.It.isAnyString()),
+        s => s.getItem(TypeMoq.It.isAnyString()),
         TypeMoq.Times.once()
       );
 
@@ -32,7 +32,7 @@ describe("loadData", () => {
     v.assertForall(v.asciinestring, v.dict(v.string), (key, newValues) => {
       const storageMock = TypeMoq.Mock.ofType<Storage>();
       storageMock
-        .setup(storage => storage.getItem(TypeMoq.It.isValue(key)))
+        .setup(s => s.getItem(TypeMoq.It.isValue(key)))
         .returns(() => JSON.stringify(newValues));
 
       const storage = BrowserStorage.useWith(storageMock.object);
@@ -48,7 +48,7 @@ describe("loadData", () => {
     v.assertForall(v.asciinestring, key => {
       const storageMock = TypeMoq.Mock.ofType<Storage>();
       storageMock
-        .setup(storage => storage.getItem(TypeMoq.It.isValue(key)))
+        .setup(s => s.getItem(TypeMoq.It.isValue(key)))
         .returns(() => null);
 
       const storage = BrowserStorage.useWith(storageMock.object);
