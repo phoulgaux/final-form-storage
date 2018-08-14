@@ -1,9 +1,9 @@
 import { FormSubscriber } from "final-form";
 
-import { IStorageOptions } from "./interfaces/IStorageOptions";
+import { StorageOptions } from "./interfaces/StorageOptions";
 
-type FormSubscriberBuilder = (options: IStorageOptions) => FormSubscriber;
+type FormSubscriberBuilder = (options: StorageOptions) => FormSubscriber;
 
 export const saveValues: FormSubscriberBuilder = options => formState => {
-  options.storage.setItem(options.key, JSON.stringify(formState.values));
+  options.storage.saveData(options.key, formState.values);
 };
