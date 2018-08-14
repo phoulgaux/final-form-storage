@@ -78,3 +78,5 @@ There's an issue with nesting `arbitraryInternalFormState` within `arbitraryMuta
 
 ### Compatibility with `define-form`
 * Not guaranteed work smoothly with `define-form`, which is an alternative, generics-based typings for `final-form`. `final-form-storage` does not support generic values object – it's type is `any`. On the roadmap.
+
+## Contributing
