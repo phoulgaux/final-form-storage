@@ -3,4 +3,4 @@ node_js:
   - node
 script: npm run typecheck && npm run lint && npm test
 after_success:
-  - codecov
+  - bash < (curl -s https://codecov.io/bash)
