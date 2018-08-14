@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/phoulgaux/final-form-storage.svg?branch=master)](https://travis-ci.org/phoulgaux/final-form-storage)
 [![codebeat badge](https://codebeat.co/badges/6c460a92-0ba0-4e4a-a104-3c5209ee8ddc)](https://codebeat.co/projects/github-com-phoulgaux-final-form-storage-master)
+[![codecov](https://codecov.io/gh/phoulgaux/final-form-storage/branch/master/graph/badge.svg)](https://codecov.io/gh/phoulgaux/final-form-storage)
 
 A set of helpers helping persist the state of form based on Final Form
 
