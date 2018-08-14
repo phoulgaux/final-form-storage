@@ -5,17 +5,13 @@ export class BrowserStorage implements DataStorage {
     return new BrowserStorage(underlyingStorage);
   }
 
-  private storage: Storage | null = null;
+  private storage: Storage;
 
   private constructor(underlyingStorage: Storage) {
     this.storage = underlyingStorage;
   }
 
   public loadData(key: string) {
-    if (this.storage === null) {
-      return null;
-    }
-
     const retrievedItem = this.storage.getItem(key);
 
     if (retrievedItem === null) {
@@ -26,10 +22,6 @@ export class BrowserStorage implements DataStorage {
   }
 
   public saveData(key: string, value: any) {
-    if (this.storage === null) {
-      return;
-    }
-
     this.storage.setItem(key, JSON.stringify(value));
   }
 }

@@ -59,17 +59,6 @@ describe("loadData", () => {
       return true;
     });
   });
-
-  test("returns null when storage is null", () => {
-    v.assertForall(v.asciinestring, key => {
-      const storage = BrowserStorage.useWith(null);
-      const retrievedValues = storage.loadData(key);
-
-      expect(retrievedValues).toBeNull();
-
-      return true;
-    });
-  });
 });
 
 describe("saveData", () => {
