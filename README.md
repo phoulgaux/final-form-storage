@@ -78,6 +78,6 @@ In addition:
 There's an issue with nesting `arbitraryInternalFormState` within `arbitraryMutableState`. It's circumvented with explicit casting, though it's not completely typesafe. Low priority due to being present only in tests.
 
 ### Compatibility with `define-form`
-* Not guaranteed work smoothly with `define-form`, which is an alternative, generics-based typings for `final-form`. `final-form-storage` does not support generic values object – it's type is `any`. On the roadmap.
+Not guaranteed work smoothly with `define-form`, which is an alternative, generics-based typings for `final-form`. `final-form-storage` does not support generic values object – it's type is `any`. On the roadmap.
 
 ## Contributing
